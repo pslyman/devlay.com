@@ -8,19 +8,21 @@
       content="One of the last short, readable domains in existence. Used to host subdomains, keeping websites cheap for people I know."
     />
     <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="image" href="/backdrop.jpg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
     <style>
       body,
       html {
-        background-color: #333438;
+        background-color: #272727;
         margin: 0;
         padding: 0;
+        overflow: hidden;
       }
       h1 {
         font-family: Georgia, serif;
         color: #e6e6e6;
-        /* background-color: #333438; */
         text-align: center;
         width: 100%;
         font-size: 50px;
@@ -32,7 +34,6 @@
         font-style: normal;
         font-weight: normal;
         color: #e6e6e6;
-        /* background-color: #333438; */
         text-align: center;
         width: calc(100% - 10px);
         line-height: 20px;
@@ -40,32 +41,108 @@
         padding-right: 5px;
       }
       body {
+        background-color: #272727;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+
+        align-items: center;
+        justify-items: center;
+      }
+      .words {
+        width: 100%;
+        margin-bottom: 20%;
+        z-index: 20;
+      }
+      .background-container {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+        display: none;
+      }
+      .add-image {
         background-image: linear-gradient(
             rgba(0, 0, 0, 0.7),
             rgba(0, 0, 0, 0.7)
           ),
-          url("./splash2.jpg");
-        background-color: #161616;
-
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        background-position: center; /* Center the image */
-        background-repeat: no-repeat; /* Do not repeat the image */
-        background-size: cover; /* Resize the background image to cover the entire container */
-        align-items: center;
-        justify-items: center;
+          url("./backdrop.jpg");
       }
-      div {
-        
-        /* height: 100%; */
-        width: 100%;
-        margin-bottom: 20%;
+      .fadeImage {
+        -webkit-animation: fadein 2s ease-out; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 2s ease-out; /* Firefox < 16 */
+        -ms-animation: fadein 2s ease-out; /* Internet Explorer */
+        -o-animation: fadein 2s ease-out; /* Opera < 12.1 */
+        animation: fadein 2s ease-out;
+      }
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Firefox < 16 */
+      @-moz-keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Safari, Chrome and Opera > 12.1 */
+      @-webkit-keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Internet Explorer */
+      @-ms-keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Opera < 12.1 */
+      @-o-keyframes fadein {
+        from {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
       }
     </style>
   </head>
   <body>
-    <div>
+    <div class="background-container fadeImage"></div>
+    <div class="words">
       <h1>Devlay</h1>
       <p>
         One of the last short, readable domains in existence.<br />Used to host
@@ -74,3 +151,25 @@
     </div>
   </body>
 </html>
+<script>
+  function addClass() {
+    let element = document.querySelector(".background-container");
+    let classes = element.classList;
+    classes.add("add-image");
+
+    let cols = document.getElementsByClassName("background-container");
+    for (i = 0; i < cols.length; i++) {
+      cols[i].style.display = "block";
+    }
+  }
+
+  function preloadImage(url) {
+    var img = new Image();
+    img.src = "/backdrop.jpg";
+    img.onload = function () {
+      addClass();
+    };
+  }
+
+  window.onload = preloadImage();
+</script>
